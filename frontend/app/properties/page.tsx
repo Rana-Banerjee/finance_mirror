@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import axios from "axios"
 
 interface Property {
@@ -15,12 +16,25 @@ interface Property {
 export default function PropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([])
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
+    fetchProperties()
+  }, [])
+
+  function fetchProperties() {
+    setLoading(true)
     axios.get("http://localhost:8000/api/v1/properties")
       .then(res => setProperties(res.data))
       .finally(() => setLoading(false))
-  }, [])
+  }
+
+  function handleDelete(id: number) {
+    if (!confirm("Delete this property?")) return
+    axios.delete(`http://localhost:8000/api/v1/properties/${id}`)
+      .then(() => setProperties(prev => prev.filter(p => p.id !== id)))
+      .catch(err => alert("Failed to delete: " + (err.response?.data?.detail || err.message)))
+  }
 
   if (loading) return <p>Loading...</p>
 
@@ -58,7 +72,8 @@ export default function PropertiesPage() {
                 <td style={{ padding: 8 }}>₹{Number(property.property_value).toLocaleString()}</td>
                 <td style={{ padding: 8 }}>{property.purchase_date || "—"}</td>
                 <td style={{ padding: 8 }}>
-                  <Link href={`/properties/${property.id}/edit`}>Edit</Link>
+                  <Link href={`/properties/${property.id}/edit`} style={{ marginRight: 12 }}>Edit</Link>
+                  <button onClick={() => handleDelete(property.id)} style={{ color: "red", background: "none", border: "none", cursor: "pointer", padding: 0 }}>Delete</button>
                 </td>
               </tr>
             ))}

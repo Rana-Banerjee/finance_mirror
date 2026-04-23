@@ -1,7 +1,11 @@
 from pydantic import BaseModel
 from datetime import date
 from decimal import Decimal
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.schemas.event import EventResponse
+    from app.schemas.cashflow import CashflowComponentResponse
 
 
 class AssetComponentBase(BaseModel):
@@ -53,3 +57,11 @@ class InvestmentUnitResponse(InvestmentUnitBase):
 
 class PropertyDetailResponse(InvestmentUnitResponse):
     assets: list[AssetComponentResponse] = []
+    events: list["EventResponse"] = []
+    cashflow: Optional["CashflowComponentResponse"] = None
+
+
+from app.schemas.event import EventResponse  # noqa: E402
+from app.schemas.cashflow import CashflowComponentResponse  # noqa: E402
+
+PropertyDetailResponse.model_rebuild()

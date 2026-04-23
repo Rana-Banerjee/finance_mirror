@@ -1,5 +1,5 @@
 from datetime import date
-from sqlalchemy import Column, Integer, String, Numeric, Enum, Date, ForeignKey, func
+from sqlalchemy import Column, Integer, String, Numeric, Enum, Date, ForeignKey
 from sqlalchemy.orm import relationship
 import enum
 
@@ -30,6 +30,26 @@ class InvestmentUnit(Base):
         "AssetComponent",
         back_populates="investment_unit",
         foreign_keys="AssetComponent.investment_unit_id",
+        cascade="all, delete-orphan",
+    )
+    liabilities = relationship(
+        "LiabilityComponent",
+        back_populates="investment_unit",
+        foreign_keys="LiabilityComponent.investment_unit_id",
+        cascade="all, delete-orphan",
+    )
+    events = relationship(
+        "Event",
+        back_populates="investment_unit",
+        foreign_keys="Event.investment_unit_id",
+        cascade="all, delete-orphan",
+    )
+    cashflow = relationship(
+        "CashflowComponent",
+        back_populates="investment_unit",
+        foreign_keys="CashflowComponent.investment_unit_id",
+        uselist=False,
+        cascade="all, delete-orphan",
     )
 
 
