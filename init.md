@@ -4,11 +4,17 @@
 
 ## Current Phase
 
-**Phase:** 1 — Property Core (MVP)
+**Phase:** 1 — Property Core (MVP) — **COMPLETED**
 
 ## Completed Items
 
-- None yet
+- Set up project structure (backend + frontend directories)
+- Install dependencies and verify dev servers run
+- Create database models (investment_units, asset_components)
+- Implement Property CRUD APIs
+- Create frontend property list page + form
+- Verify end-to-end flow (lint + typecheck pass)
+- **Fix:** Upgraded Next.js 14.2.3 → 15.5.15 for Node 22 compatibility
 
 ## In Progress Items
 
@@ -20,12 +26,8 @@
 
 ## Next Tasks
 
-1. Set up project structure (backend + frontend directories)
-2. Install dependencies and verify dev servers run
-3. Create database models (investment_units, asset_components)
-4. Implement Property CRUD APIs
-5. Create frontend property list page + form
-6. Verify end-to-end flow
+1. Set up PostgreSQL database schema (run alembic migrations)
+2. Phase 2 — Loan Foundation (EMI, flat/reducing, schemas, APIs)
 
 ---
 
@@ -33,4 +35,6 @@
 
 | Date | Phase | Completed | Notes |
 |------|-------|----------|-------|
-| 2026-04-23 | 1 | (start) | Project initialized |
+| 2026-04-23 | 1 | (all tasks) | Property Core MVP complete |
+
+(End of file - total 37 lines)
